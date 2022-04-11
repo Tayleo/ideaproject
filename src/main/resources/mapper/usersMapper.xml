@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.usersMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.bean.users">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_nickname" jdbcType="VARCHAR" property="userNickname" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="user_avator_url" jdbcType="VARCHAR" property="userAvatorUrl" />
+    <result column="user_role" jdbcType="INTEGER" property="userRole" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="session_key" jdbcType="VARCHAR" property="sessionKey" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, user_nickname, user_password, user_avator_url, user_role, open_id, session_key
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from alluser
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from alluser
+    where open_id = #{open_id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from alluser
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.bean.users">
+    insert into alluser (user_id, user_nickname, user_password, 
+      user_avator_url, user_role, open_id, 
+      session_key)
+    values (#{userId,jdbcType=INTEGER}, #{userNickname,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
+      #{userAvatorUrl,jdbcType=VARCHAR}, 4, #{openId,jdbcType=VARCHAR},
+      #{sessionKey,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.bean.users">
+    insert into alluser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userNickname != null">
+        user_nickname,
+      </if>
+      <if test="userPassword != null">
+        user_password,
+      </if>
+      <if test="userAvatorUrl != null">
+        user_avator_url,
+      </if>
+      <if test="userRole != null">
+        user_role,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="sessionKey != null">
+        session_key,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userNickname != null">
+        #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userAvatorUrl != null">
+        #{userAvatorUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userRole != null">
+        #{userRole,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionKey != null">
+        #{sessionKey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="setopenidnull" parameterType="java.lang.Integer">
+    update alluser
+    <set>
+      open_id=null
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.bean.users">
+    update alluser
+    <set>
+      <if test="userNickname != null">
+        user_nickname = #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userAvatorUrl != null">
+        user_avator_url = #{userAvatorUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userRole != null">
+        user_role = #{userRole,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionKey != null">
+        session_key = #{sessionKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.bean.users">
+    update alluser
+    set user_nickname = #{userNickname,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_avator_url = #{userAvatorUrl,jdbcType=VARCHAR},
+      user_role = #{userRole,jdbcType=INTEGER},
+      open_id = #{openId,jdbcType=VARCHAR},
+      session_key = #{sessionKey,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

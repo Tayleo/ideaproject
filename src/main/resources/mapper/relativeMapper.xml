@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.relativeMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.bean.relative">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="children_name" jdbcType="VARCHAR" property="childrenName" />
+    <result column="children_gender" jdbcType="TINYINT" property="childrenGender" />
+    <result column="children_age" jdbcType="INTEGER" property="childrenAge" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="now_address" jdbcType="VARCHAR" property="nowAddress" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="e_mail" jdbcType="VARCHAR" property="eMail" />
+    <result column="lost_cloth" jdbcType="VARCHAR" property="lostCloth" />
+    <result column="lost_height" jdbcType="VARCHAR" property="lostHeight" />
+    <result column="lost_address" jdbcType="VARCHAR" property="lostAddress" />
+    <result column="lost_time" jdbcType="DATE" property="lostTime" />
+    <result column="features" jdbcType="VARCHAR" property="features" />
+    <result column="details" jdbcType="VARCHAR" property="details" />
+    <result column="relation" jdbcType="VARCHAR" property="relation" />
+    <result column="myname" jdbcType="VARCHAR" property="myname" />
+    <result column="myage" jdbcType="TINYINT" property="myage" />
+    <result column="children_url" jdbcType="VARCHAR" property="childrenUrl" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, children_name, children_gender, children_age, birthday, now_address, phone, 
+    e_mail, lost_cloth, lost_height, lost_address, lost_time, features, details, relation, 
+    myname, myage, children_url
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from relative
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from relative
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.bean.relative">
+    insert into relative (user_id, children_name, children_gender, 
+      children_age, birthday, now_address, 
+      phone, e_mail, lost_cloth, 
+      lost_height, lost_address, lost_time, 
+      features, details, relation, 
+      myname, myage, children_url
+      )
+    values (#{userId,jdbcType=INTEGER}, #{childrenName,jdbcType=VARCHAR}, #{childrenGender,jdbcType=TINYINT}, 
+      #{childrenAge,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{nowAddress,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{eMail,jdbcType=VARCHAR}, #{lostCloth,jdbcType=VARCHAR}, 
+      #{lostHeight,jdbcType=VARCHAR}, #{lostAddress,jdbcType=VARCHAR}, #{lostTime,jdbcType=DATE}, 
+      #{features,jdbcType=VARCHAR}, #{details,jdbcType=VARCHAR}, #{relation,jdbcType=VARCHAR}, 
+      #{myname,jdbcType=VARCHAR}, #{myage,jdbcType=TINYINT}, #{childrenUrl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.bean.relative">
+    insert into relative
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="childrenName != null">
+        children_name,
+      </if>
+      <if test="childrenGender != null">
+        children_gender,
+      </if>
+      <if test="childrenAge != null">
+        children_age,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="nowAddress != null">
+        now_address,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="eMail != null">
+        e_mail,
+      </if>
+      <if test="lostCloth != null">
+        lost_cloth,
+      </if>
+      <if test="lostHeight != null">
+        lost_height,
+      </if>
+      <if test="lostAddress != null">
+        lost_address,
+      </if>
+      <if test="lostTime != null">
+        lost_time,
+      </if>
+      <if test="features != null">
+        features,
+      </if>
+      <if test="details != null">
+        details,
+      </if>
+      <if test="relation != null">
+        relation,
+      </if>
+      <if test="myname != null">
+        myname,
+      </if>
+      <if test="myage != null">
+        myage,
+      </if>
+      <if test="childrenUrl != null">
+        children_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="childrenName != null">
+        #{childrenName,jdbcType=VARCHAR},
+      </if>
+      <if test="childrenGender != null">
+        #{childrenGender,jdbcType=TINYINT},
+      </if>
+      <if test="childrenAge != null">
+        #{childrenAge,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="nowAddress != null">
+        #{nowAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="eMail != null">
+        #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="lostCloth != null">
+        #{lostCloth,jdbcType=VARCHAR},
+      </if>
+      <if test="lostHeight != null">
+        #{lostHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="lostAddress != null">
+        #{lostAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lostTime != null">
+        #{lostTime,jdbcType=DATE},
+      </if>
+      <if test="features != null">
+        #{features,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null">
+        #{details,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null">
+        #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="myname != null">
+        #{myname,jdbcType=VARCHAR},
+      </if>
+      <if test="myage != null">
+        #{myage,jdbcType=TINYINT},
+      </if>
+      <if test="childrenUrl != null">
+        #{childrenUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.bean.relative">
+    update relative
+    <set>
+      <if test="childrenName != null">
+        children_name = #{childrenName,jdbcType=VARCHAR},
+      </if>
+      <if test="childrenGender != null">
+        children_gender = #{childrenGender,jdbcType=TINYINT},
+      </if>
+      <if test="childrenAge != null">
+        children_age = #{childrenAge,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="nowAddress != null">
+        now_address = #{nowAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="eMail != null">
+        e_mail = #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="lostCloth != null">
+        lost_cloth = #{lostCloth,jdbcType=VARCHAR},
+      </if>
+      <if test="lostHeight != null">
+        lost_height = #{lostHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="lostAddress != null">
+        lost_address = #{lostAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lostTime != null">
+        lost_time = #{lostTime,jdbcType=DATE},
+      </if>
+      <if test="features != null">
+        features = #{features,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null">
+        details = #{details,jdbcType=VARCHAR},
+      </if>
+      <if test="relation != null">
+        relation = #{relation,jdbcType=VARCHAR},
+      </if>
+      <if test="myname != null">
+        myname = #{myname,jdbcType=VARCHAR},
+      </if>
+      <if test="myage != null">
+        myage = #{myage,jdbcType=TINYINT},
+      </if>
+      <if test="childrenUrl != null">
+        children_url = #{childrenUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.bean.relative">
+    update relative
+    set children_name = #{childrenName,jdbcType=VARCHAR},
+      children_gender = #{childrenGender,jdbcType=TINYINT},
+      children_age = #{childrenAge,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=DATE},
+      now_address = #{nowAddress,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      e_mail = #{eMail,jdbcType=VARCHAR},
+      lost_cloth = #{lostCloth,jdbcType=VARCHAR},
+      lost_height = #{lostHeight,jdbcType=VARCHAR},
+      lost_address = #{lostAddress,jdbcType=VARCHAR},
+      lost_time = #{lostTime,jdbcType=DATE},
+      features = #{features,jdbcType=VARCHAR},
+      details = #{details,jdbcType=VARCHAR},
+      relation = #{relation,jdbcType=VARCHAR},
+      myname = #{myname,jdbcType=VARCHAR},
+      myage = #{myage,jdbcType=TINYINT},
+      children_url = #{childrenUrl,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

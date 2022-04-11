@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.messageMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.bean.message">
+    <id column="info_id" jdbcType="INTEGER" property="infoId" />
+    <result column="send_id" jdbcType="INTEGER" property="sendId" />
+    <result column="accept_id" jdbcType="INTEGER" property="acceptId" />
+    <result column="real_send_id" jdbcType="INTEGER" property="realSendId" />
+    <result column="real_accept_id" jdbcType="INTEGER" property="realAcceptId" />
+    <result column="info_content" jdbcType="VARCHAR" property="infoContent" />
+    <result column="info_time" jdbcType="TIMESTAMP" property="infoTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    info_id, send_id, accept_id, real_send_id, real_accept_id, info_content, info_time, 
+    status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from message
+    where info_id = #{infoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from message
+    where info_id = #{infoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.bean.message">
+    insert into message (info_id, send_id, accept_id, 
+      real_send_id, real_accept_id, info_content, 
+      info_time, status)
+    values (#{infoId,jdbcType=INTEGER}, #{sendId,jdbcType=INTEGER}, #{acceptId,jdbcType=INTEGER}, 
+      #{realSendId,jdbcType=INTEGER}, #{realAcceptId,jdbcType=INTEGER}, #{infoContent,jdbcType=VARCHAR}, 
+      #{infoTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.bean.message">
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="infoId != null">
+        info_id,
+      </if>
+      <if test="sendId != null">
+        send_id,
+      </if>
+      <if test="acceptId != null">
+        accept_id,
+      </if>
+      <if test="realSendId != null">
+        real_send_id,
+      </if>
+      <if test="realAcceptId != null">
+        real_accept_id,
+      </if>
+      <if test="infoContent != null">
+        info_content,
+      </if>
+      <if test="infoTime != null">
+        info_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="infoId != null">
+        #{infoId,jdbcType=INTEGER},
+      </if>
+      <if test="sendId != null">
+        #{sendId,jdbcType=INTEGER},
+      </if>
+      <if test="acceptId != null">
+        #{acceptId,jdbcType=INTEGER},
+      </if>
+      <if test="realSendId != null">
+        #{realSendId,jdbcType=INTEGER},
+      </if>
+      <if test="realAcceptId != null">
+        #{realAcceptId,jdbcType=INTEGER},
+      </if>
+      <if test="infoContent != null">
+        #{infoContent,jdbcType=VARCHAR},
+      </if>
+      <if test="infoTime != null">
+        #{infoTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.bean.message">
+    update message
+    <set>
+      <if test="sendId != null">
+        send_id = #{sendId,jdbcType=INTEGER},
+      </if>
+      <if test="acceptId != null">
+        accept_id = #{acceptId,jdbcType=INTEGER},
+      </if>
+      <if test="realSendId != null">
+        real_send_id = #{realSendId,jdbcType=INTEGER},
+      </if>
+      <if test="realAcceptId != null">
+        real_accept_id = #{realAcceptId,jdbcType=INTEGER},
+      </if>
+      <if test="infoContent != null">
+        info_content = #{infoContent,jdbcType=VARCHAR},
+      </if>
+      <if test="infoTime != null">
+        info_time = #{infoTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where info_id = #{infoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.bean.message">
+    update message
+    set send_id = #{sendId,jdbcType=INTEGER},
+      accept_id = #{acceptId,jdbcType=INTEGER},
+      real_send_id = #{realSendId,jdbcType=INTEGER},
+      real_accept_id = #{realAcceptId,jdbcType=INTEGER},
+      info_content = #{infoContent,jdbcType=VARCHAR},
+      info_time = #{infoTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT}
+    where info_id = #{infoId,jdbcType=INTEGER}
+  </update>
+</mapper>

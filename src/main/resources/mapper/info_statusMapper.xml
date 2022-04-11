@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.info_statusMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.bean.info_status">
+    <id column="info_status_id" jdbcType="INTEGER" property="infoStatusId" />
+    <result column="info_status" jdbcType="VARCHAR" property="infoStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    info_status_id, info_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from info_status
+    where info_status_id = #{infoStatusId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from info_status
+    where info_status_id = #{infoStatusId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.bean.info_status">
+    insert into info_status (info_status_id, info_status)
+    values (#{infoStatusId,jdbcType=INTEGER}, #{infoStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.bean.info_status">
+    insert into info_status
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="infoStatusId != null">
+        info_status_id,
+      </if>
+      <if test="infoStatus != null">
+        info_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="infoStatusId != null">
+        #{infoStatusId,jdbcType=INTEGER},
+      </if>
+      <if test="infoStatus != null">
+        #{infoStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.bean.info_status">
+    update info_status
+    <set>
+      <if test="infoStatus != null">
+        info_status = #{infoStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where info_status_id = #{infoStatusId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.bean.info_status">
+    update info_status
+    set info_status = #{infoStatus,jdbcType=VARCHAR}
+    where info_status_id = #{infoStatusId,jdbcType=INTEGER}
+  </update>
+</mapper>
