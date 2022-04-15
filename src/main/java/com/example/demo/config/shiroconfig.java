@@ -22,9 +22,9 @@ public class shiroconfig {
         factoryBean.setSecurityManager(defaultWebSecurityManager);
 
         //权限设置
-        Map<String,String> map=new HashMap<>();
-        map.put("/ChildrenController/getallChildren","authc");
-        factoryBean.setFilterChainDefinitionMap(map);
+//        Map<String,String> map=new HashMap<>();
+//        map.put("/ChildrenController/getallChildren","authc");
+//        factoryBean.setFilterChainDefinitionMap(map);
         return factoryBean;
     }
 

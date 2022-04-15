@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RelativeService {
     List<relative> getallRelative();
-
+    relative getRelativeById(int user_id);
 }

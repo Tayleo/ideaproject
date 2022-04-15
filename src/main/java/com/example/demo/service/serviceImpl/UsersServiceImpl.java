@@ -22,8 +22,8 @@ public class UsersServiceImpl implements UsersService {
     public Result CancelBindWechat(Map map) {
         int user_id= (int) map.get("user_id");
         try {
-
-            usersMapper.setopenidnull(user_id);
+            //取消登录不应该设置openid为空，而应该设置缓存为空
+            //usersMapper.setopenidnull(user_id);
             return ResultGenerator.genSuccessResult();
         }catch (SqlSessionException e){
             return ResultGenerator.genFailResult("失败");

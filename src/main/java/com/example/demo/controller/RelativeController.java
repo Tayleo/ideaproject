@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.bean.relative;
 import com.example.demo.result.Result;
 import com.example.demo.result.ResultGenerator;
 import com.example.demo.service.RelativeService;
@@ -23,6 +24,7 @@ public class RelativeController {
      */
     @RequestMapping("getallRelative")
     public Result getallRelative(){
+
         Result result= ResultGenerator.genSuccessResult(relativeService.getallRelative());
 
         return result;
@@ -35,8 +37,9 @@ public class RelativeController {
      */
     @RequestMapping("getRelativebyid")
     public Result getRelativebyid(@RequestBody Map params){
-
-        return null;
+        int user_id= (int) params.get("user_id");
+        relative r=relativeService.getRelativeById(user_id);
+        return ResultGenerator.genSuccessResult(r);
     }
 
     /**

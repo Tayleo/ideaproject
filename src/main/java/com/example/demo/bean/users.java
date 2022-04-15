@@ -9,11 +9,21 @@ public class users {
 
     private String userAvatorUrl;
 
+    public Long getQiniuyunId() {
+        return qiniuyunId;
+    }
+
+    public void setQiniuyunId(Long qiniuyunId) {
+        this.qiniuyunId = qiniuyunId;
+    }
+
     private Integer userRole;
 
     private String openId;
 
     private String sessionKey;
+
+    private Long qiniuyunId;
 
     public Integer getUserId() {
         return userId;

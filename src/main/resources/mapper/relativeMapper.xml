@@ -32,6 +32,11 @@
     from relative
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
+  <select id="selectAllRelative" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from relative
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from relative
     where user_id = #{userId,jdbcType=INTEGER}

@@ -27,7 +27,7 @@
 <!--    select * from children;-->
 <!--  </select>-->
 
-  <select id="selectallchildren" resultType="com.example.demo.bean.children">
+  <select id="selectallchildren" resultMap="BaseResultMap">
     select * from children;
   </select>
 

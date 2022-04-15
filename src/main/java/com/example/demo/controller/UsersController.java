@@ -30,6 +30,9 @@ public class UsersController {
     @Autowired
     UsersServiceImpl usersService;
 
+    @Autowired
+    MessageController messageController;
+
 //    @RequestMapping("login")
 //    public Result userLogin( ){
 //        Subject subject= SecurityUtils.getSubject();
@@ -69,6 +72,11 @@ public class UsersController {
         //将得到的openid在数据库中查询
         users user = usersService.selectByOpenId(openid);
         if(user==null || user.getUserId()==null){  //用户第一次登录，数据库中没有数据
+            //获取七牛云聊天id
+            Map<String,String> mapadduser= new HashMap();
+            mapadduser.put("user_name","test6");
+            Long qiniuyunid=messageController.addUser(mapadduser);
+
             //将数据添加到数据库
             user=new users();
             HashMap<String,Map> userinfo= (HashMap<String, Map>) map.get("userinfo");
@@ -77,6 +85,7 @@ public class UsersController {
             user.setOpenId(openid);
             user.setSessionKey(session_key);
             user.setUserAvatorUrl(userInfos.get("avatarUrl"));
+            user.setQiniuyunId(qiniuyunid);
             usersService.insertuser(user);
         }else{           //用户有数据则返回openid
             //buzhi

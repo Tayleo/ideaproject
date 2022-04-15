@@ -1,6 +1,7 @@
 package com.example.demo.utils;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -29,14 +30,18 @@ import java.util.Map;
 
 /**
  * httpClient 工具类
- * @author java1234_小锋
- * @site www.java1234.com
- * @company Java知识分享网
- * @create 2019-02-10 下午 2:49
  */
 @Component
 public class HttpClientUtil {
 
+    private  String app_id="esplxjteaalc";
+    private  String api_endpoint="https://s-1-3-s-api.maximtop.cn";
+    private  String access_token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhcHAiOiJlc3BseGp0ZWFhbGMiLCJzdWIiOiIyMDk5IiwiY2x1c3RlciI6MCwicm9sZSI6MiwiaWF0IjoxNjQ5Njg2NTEwfQ.PlXw8jqGkmz-zu7j0HmcET019BheaaY1632sqiM48izJ_xXcSlkBJCWf8tRNpQpOS7-TpAccGq1lkp0tNylEeA";
+    /**
+     *api_endpoint:https://s-1-3-s-api.maximtop.cn
+     * app_id:esplxjteaalc
+     * access-token:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhcHAiOiJlc3BseGp0ZWFhbGMiLCJzdWIiOiIyMDk5IiwiY2x1c3RlciI6MCwicm9sZSI6MiwiaWF0IjoxNjQ5Njg2NTEwfQ.PlXw8jqGkmz-zu7j0HmcET019BheaaY1632sqiM48izJ_xXcSlkBJCWf8tRNpQpOS7-TpAccGq1lkp0tNylEeA
+     */
     /**
      * 默认参数设置
      * setConnectTimeout：设置连接超时时间，单位毫秒。
@@ -60,11 +65,85 @@ public class HttpClientUtil {
     }
 
     /**
-     * 发送 post请求
+     * 发送 post请求   请求头带content-type,app_id
+     * @param params 参数(格式:key1=value1&key2=value2)
      * @param httpUrl 地址
      */
-    public String sendHttpPost(String httpUrl) {
+    public String sendHttpPostIM(String httpUrl,String params) {
         HttpPost httpPost = new HttpPost(httpUrl);// 创建httpPost
+
+        try {
+            //设置参数
+            httpPost.setHeader("Content-Type","application/json");
+            httpPost.setHeader("app_id",app_id);
+            StringEntity stringEntity = new StringEntity(params,"UTF-8");
+            httpPost.setEntity(stringEntity);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sendHttpPost(httpPost);
+    }
+
+    /**
+     * 发送 post请求   请求头带content-type,app_id,access_token
+     * @param params 参数(格式:key1=value1&key2=value2)
+     * @param httpUrl 地址
+     */
+    public String sendHttpPostIM1(String httpUrl,String params) {
+        HttpPost httpPost = new HttpPost(httpUrl);// 创建httpPost
+
+        try {
+            //设置参数
+            httpPost.setHeader("Content-Type","application/json");
+            httpPost.setHeader("app_id",app_id);
+            httpPost.setHeader("access-token",access_token);
+            StringEntity stringEntity = new StringEntity(params,"UTF-8");
+            httpPost.setEntity(stringEntity);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sendHttpPost(httpPost);
+    }
+
+    /**
+     * 发送 post请求 请求头带content-type,app_id,access_token,user_id
+     * @param params 参数(格式:key1=value1&key2=value2)
+     * @param httpUrl 地址
+     */
+    public String sendHttpPostIMAnother(String httpUrl,String params,Long user_id) {
+        HttpPost httpPost = new HttpPost(httpUrl);// 创建httpPost
+        try {
+            //设置参数
+            httpPost.setHeader("Content-Type","application/json");
+            httpPost.setHeader("app_id",app_id);
+            httpPost.setHeader("user_id",user_id.toString());
+            httpPost.setHeader("access-token",access_token);
+            StringEntity stringEntity = new StringEntity(params,"UTF-8");
+            httpPost.setEntity(stringEntity);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sendHttpPost(httpPost);
+    }
+
+    /**
+     * 发送 post请求 不带参数
+     * @param httpUrl 地址
+     */
+    public String sendHttpPostIMnodata(String httpUrl,Long user_id) {
+        HttpPost httpPost = new HttpPost(httpUrl);// 创建httpPost
+        try {
+            //设置参数
+            httpPost.setHeader("Content-Type","application/json");
+            httpPost.setHeader("app_id",app_id);
+            httpPost.setHeader("user_id",user_id.toString());
+            httpPost.setHeader("access-token",access_token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return sendHttpPost(httpPost);
     }
 
@@ -158,11 +237,23 @@ public class HttpClientUtil {
     }
 
     /**
-     * 发送 get请求Https
+     * 发送 get请求Https  设置Content-Type，app_id，user_id，access-token
      * @param httpUrl
      */
-    public String sendHttpsGet(String httpUrl) {
+    public String sendHttpsGet(String httpUrl,Long user_id) {
         HttpGet httpGet = new HttpGet(httpUrl);// 创建get请求
+        try{
+            //设置参数
+
+            httpGet.setHeader("Content-Type","application/json");
+            httpGet.setHeader("app_id",app_id);
+            httpGet.setHeader("user_id",user_id.toString());
+            httpGet.setHeader("access-token",access_token);
+            System.out.println(httpGet);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         return sendHttpsGet(httpGet);
     }
 
@@ -178,7 +269,6 @@ public class HttpClientUtil {
         String responseContent = null;
         try {
             // 创建默认的httpClient实例.
-
 
             httpClient = HttpClients.createDefault();
 
