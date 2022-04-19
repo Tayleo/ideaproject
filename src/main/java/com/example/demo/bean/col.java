@@ -1,23 +1,19 @@
 package com.example.demo.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class col {
-    private Integer colId;
+
 
     private Integer userId;
 
     private Integer userColId;
 
+    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date colTime;
 
-    public Integer getColId() {
-        return colId;
-    }
-
-    public void setColId(Integer colId) {
-        this.colId = colId;
-    }
 
     public Integer getUserId() {
         return userId;

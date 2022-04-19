@@ -3,7 +3,7 @@
 <mapper namespace="com.example.demo.dao.matchMapper">
   <resultMap id="BaseResultMap" type="com.example.demo.bean.match">
     <id column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="match_id" jdbcType="INTEGER" property="matchId" />
+    <id column="match_id" jdbcType="INTEGER" property="matchId" />
     <result column="match_time" jdbcType="TIMESTAMP" property="matchTime" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -14,10 +14,12 @@
     <include refid="Base_Column_List" />
     from match
     where user_id = #{userId,jdbcType=INTEGER}
+      and match_id = #{matchId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from match
     where user_id = #{userId,jdbcType=INTEGER}
+      and match_id = #{matchId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.example.demo.bean.match">
     insert into match (user_id, match_id, match_time
@@ -53,19 +55,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.bean.match">
     update match
     <set>
-      <if test="matchId != null">
-        match_id = #{matchId,jdbcType=INTEGER},
-      </if>
       <if test="matchTime != null">
         match_time = #{matchTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
+      and match_id = #{matchId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.demo.bean.match">
     update match
-    set match_id = #{matchId,jdbcType=INTEGER},
-      match_time = #{matchTime,jdbcType=TIMESTAMP}
+    set match_time = #{matchTime,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=INTEGER}
+      and match_id = #{matchId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -2,36 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.dao.collectionMapper">
   <resultMap id="BaseResultMap" type="com.example.demo.bean.col">
-    <id column="col_id" jdbcType="INTEGER" property="colId" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="user_col_id" jdbcType="INTEGER" property="userColId" />
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <id column="user_col_id" jdbcType="INTEGER" property="userColId" />
     <result column="col_time" jdbcType="TIMESTAMP" property="colTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    col_id, user_id, user_col_id, col_time
+    user_id, user_col_id, col_time
   </sql>
+  <select id="selectColTime" parameterType="java.lang.Integer" resultType="com.example.demo.bean.returndata.starinfo">
+    select a.user_id,user_role,col_time from collection c,alluser a
+    where c.user_col_id=a.user_id and c.user_id=#{userId,jdbcType=INTEGER}
+
+  </select>
+
+  <select id="selectStarInfoCl" parameterType="java.lang.Integer" resultType="com.example.demo.bean.returndata.starinfo">
+    select user_col_id,real_name name,birthday,details,pic_url avatar,col_time,2 as user_role
+    from collection c,children cl
+    where c.user_col_id=cl.user_id and c.user_id=#{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectStarInfoRe" parameterType="java.lang.Integer" resultType="com.example.demo.bean.returndata.starinfo">
+    select user_col_id,children_name name,birthday,details,children_url avatar,col_time,3 as user_role
+    from collection c,relative re
+    where c.user_col_id=re.user_id and c.user_id=#{userId,jdbcType=INTEGER}
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from collection
-    where col_id = #{colId,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
+      and user_col_id = #{userColId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from collection
-    where col_id = #{colId,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
+      and user_col_id = #{userColId,jdbcType=INTEGER}
   </delete>
+
+  <!--批量删除-->
+  <delete id="deletecols">
+    delete from collection
+    where user_id=#{userId} and user_col_id in
+    <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+        #{id}
+    </foreach>
+  </delete>
+
   <insert id="insert" parameterType="com.example.demo.bean.col">
-    insert into collection (col_id, user_id, user_col_id, 
-      col_time)
-    values (#{colId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userColId,jdbcType=INTEGER}, 
-      #{colTime,jdbcType=TIMESTAMP})
+    insert into collection (user_id, user_col_id, col_time
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userColId,jdbcType=INTEGER}, #{colTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.example.demo.bean.col">
     insert into collection
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="colId != null">
-        col_id,
-      </if>
       <if test="userId != null">
         user_id,
       </if>
@@ -43,9 +68,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="colId != null">
-        #{colId,jdbcType=INTEGER},
-      </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
       </if>
@@ -60,23 +82,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.bean.col">
     update collection
     <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="userColId != null">
-        user_col_id = #{userColId,jdbcType=INTEGER},
-      </if>
       <if test="colTime != null">
         col_time = #{colTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where col_id = #{colId,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
+      and user_col_id = #{userColId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.demo.bean.col">
     update collection
-    set user_id = #{userId,jdbcType=INTEGER},
-      user_col_id = #{userColId,jdbcType=INTEGER},
-      col_time = #{colTime,jdbcType=TIMESTAMP}
-    where col_id = #{colId,jdbcType=INTEGER}
+    set col_time = #{colTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+      and user_col_id = #{userColId,jdbcType=INTEGER}
   </update>
 </mapper>

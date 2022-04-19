@@ -18,6 +18,15 @@ public class message {
     private Date infoTime;
 
     private Byte status;
+    private Byte msgtype;
+
+    public Byte getType() {
+        return msgtype;
+    }
+
+    public void setType(Byte type) {
+        this.msgtype = type;
+    }
 
     public Integer getInfoId() {
         return infoId;

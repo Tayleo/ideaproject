@@ -10,11 +10,42 @@
     <result column="info_content" jdbcType="VARCHAR" property="infoContent" />
     <result column="info_time" jdbcType="TIMESTAMP" property="infoTime" />
     <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="msgtype" jdbcType="TINYINT" property="msgtype" />
+  </resultMap>
+  <resultMap id="msglastMap" type="com.example.demo.bean.returndata.msglast">
+    <id column="info_id" jdbcType="INTEGER" property="info_id" />
+    <result column="accept_id" jdbcType="INTEGER" property="user_id" />
+    <result column="user_avator_url" jdbcType="VARCHAR" property="avatar_url" />
+    <result column="info_time" jdbcType="TIMESTAMP" property="time" />
+    <result column="info_content" jdbcType="VARCHAR" property="content" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="msgtype" jdbcType="TINYINT" property="msgtype" />
   </resultMap>
   <sql id="Base_Column_List">
     info_id, send_id, accept_id, real_send_id, real_accept_id, info_content, info_time, 
-    status
+    status,msgtype
   </sql>
+
+  <!--查询两个用户之间的聊天记录-->
+  <select id="getMessageBefore" parameterType="java.lang.Integer" resultType="com.example.demo.bean.returndata.msgInfo">
+   select info_id,real_send_id,info_content,`status`,info_time,msgtype
+    from message
+    where send_id=#{userId} and accept_id=#{anotherId}
+    limit #{start},#{count}
+  </select>
+
+  <!--查询某个用户的最近消息列表-->
+  <select id="getLastMessageById" parameterType="java.lang.Integer" resultMap="msglastMap">
+    select info_id,accept_id,user_nickname,user_avator_url,info_time,info_content,`status`,msgtype
+    from message m,alluser u
+    where m.info_id in(select
+                            SUBSTRING_INDEX(GROUP_CONCAT( info_id order by info_time desc),',',1)from message
+                            where send_id = #{userId,jdbcType=INTEGER}
+                            group by accept_id
+                            order by info_time desc) and m.accept_id=u.user_id
+    order by m.info_time desc
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -28,10 +59,10 @@
   <insert id="insert" parameterType="com.example.demo.bean.message">
     insert into message (info_id, send_id, accept_id, 
       real_send_id, real_accept_id, info_content, 
-      info_time, status)
+      info_time, status,msgtype)
     values (#{infoId,jdbcType=INTEGER}, #{sendId,jdbcType=INTEGER}, #{acceptId,jdbcType=INTEGER}, 
       #{realSendId,jdbcType=INTEGER}, #{realAcceptId,jdbcType=INTEGER}, #{infoContent,jdbcType=VARCHAR}, 
-      #{infoTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT})
+      #{infoTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT},#{msgtype,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demo.bean.message">
     insert into message
@@ -60,6 +91,9 @@
       <if test="status != null">
         status,
       </if>
+      <if test="msgtype != null">
+        msgtype,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="infoId != null">
@@ -85,6 +119,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
+      </if>
+      <if test="msgtype != null">
+        #{msgtype,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -112,6 +149,9 @@
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
+      <if test="msgtype != null">
+        msgtype = #{msgtype,jdbcType=TINYINT},
+      </if>
     </set>
     where info_id = #{infoId,jdbcType=INTEGER}
   </update>
@@ -124,6 +164,7 @@
       info_content = #{infoContent,jdbcType=VARCHAR},
       info_time = #{infoTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=TINYINT}
+      msgtype = #{msgtype,jdbcType=TINYINT}
     where info_id = #{infoId,jdbcType=INTEGER}
   </update>
 </mapper>

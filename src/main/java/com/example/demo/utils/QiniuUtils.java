@@ -24,16 +24,18 @@ import java.io.InputStream;
 public class QiniuUtils {
     public  static String accessKey = "nUSTU9qCzgC6Q9MvD3tkNz4iKR1z6BI3ZDhUv3u_";
     public  static String secretKey = "M0Oj4I6sqDcVtZlNTIAQwWv6qIh2gTP2c49z_-BU";
-    public  static String bucket = "cjj-pics";
+    public  static String bucket = "cjj-imgs";
 
     public static void upload2Qiniu(String filePath,String fileName){
         //构造一个带指定Zone对象的配置类
+        //如果是Windows情况下，格式是 D:\\qiniu\\test.png
         Configuration cfg = new Configuration(Region.region2());
         UploadManager uploadManager = new UploadManager(cfg);
         Auth auth = Auth.create(accessKey, secretKey);
         String upToken = auth.uploadToken(bucket);
         try {
             Response response = uploadManager.put(filePath, fileName, upToken);
+
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
 //            System.out.println(putRet.key);
@@ -91,5 +93,7 @@ public class QiniuUtils {
             System.err.println(ex.response.toString());
         }
     }
+
+    //下载文件（可以直接在前端下载？）
 }
 

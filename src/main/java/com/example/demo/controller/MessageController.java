@@ -31,6 +31,74 @@ public class MessageController {
     @Autowired
     MessageServiceImpl messageService;
 
+
+    /**
+     * 获取当前用户所有聊天记录(按照时间先后排序)
+     * @return Result
+     */
+    @RequestMapping(value = "getMessage")
+    public Result getMessage(@RequestBody Map<String, Integer> params){
+//        Subject subject=SecurityUtils.getSubject();
+//        users user=(users) subject.getPrincipal();
+  //      int user_id=user.getUserId();
+        int user_id=1;
+        return messageService.getallmessage(user_id);
+    }
+
+    /**
+     * 发送消息
+     * @return Result
+     */
+    @RequestMapping(value = "sendMessages")
+    public Result sendMessages(@RequestBody Map<String, Object> params){
+//        Subject subject=SecurityUtils.getSubject();
+//        users user=(users) subject.getPrincipal();
+        //      int user_id=user.getUserId();
+        int user_id=1;
+        int accept=2;
+        return messageService.sendMessage(params);
+    }
+
+    /**
+     * 获取两个用户之间的所有聊天记录
+     * @param params
+     * @return
+     */
+    @RequestMapping(value = "getMessageBefore")
+    public Result getMessageBefore(@RequestBody Map<String, Integer> params){
+//        Subject subject=SecurityUtils.getSubject();
+//        users user=(users) subject.getPrincipal();
+        //      int user_id=user.getUserId();
+        int page=params.get("page");
+        int pagesize=params.get("pagesize");
+        int user_id=1;
+        int accept_id=params.get("accept_id");
+        return messageService.getMessageBefore(user_id,accept_id,page,pagesize);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * 获取当前用户所有聊天记录
      * @return Result

@@ -1,5 +1,6 @@
 package com.example.demo.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.context.annotation.Bean;
 
 import java.beans.JavaBean;
@@ -15,6 +16,7 @@ public class children {
 
     private Integer age;
 
+    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd",timezone="GMT+8")
     private Date birthday;
 
     private String nowAddress;
