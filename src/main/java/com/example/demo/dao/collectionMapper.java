@@ -2,7 +2,6 @@ package com.example.demo.dao;
 
 import com.example.demo.bean.col;
 import com.example.demo.bean.returndata.starinfo;
-import com.example.demo.bean.transition.colbean;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

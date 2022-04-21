@@ -28,6 +28,7 @@ public class WebSocket {
         this.session = session;
         webSocketSet.add(this);
         log.info("webSocket消息，有新的连接");
+
     }
 
     @OnClose

@@ -16,12 +16,12 @@
   </select>
 
   <select id="selectStarInfoCl" parameterType="java.lang.Integer" resultType="com.example.demo.bean.returndata.starinfo">
-    select user_col_id,real_name name,birthday,details,pic_url avatar,col_time,2 as user_role
+    select user_col_id user_id,real_name name,birthday,details,pic_url avatar,col_time,2 as user_role
     from collection c,children cl
     where c.user_col_id=cl.user_id and c.user_id=#{userId,jdbcType=INTEGER}
   </select>
   <select id="selectStarInfoRe" parameterType="java.lang.Integer" resultType="com.example.demo.bean.returndata.starinfo">
-    select user_col_id,children_name name,birthday,details,children_url avatar,col_time,3 as user_role
+    select user_col_id user_id,children_name name,birthday,details,children_url avatar,col_time,3 as user_role
     from collection c,relative re
     where c.user_col_id=re.user_id and c.user_id=#{userId,jdbcType=INTEGER}
   </select>

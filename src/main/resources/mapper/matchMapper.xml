@@ -9,26 +9,44 @@
   <sql id="Base_Column_List">
     user_id, match_id, match_time
   </sql>
+  <select id="selectMatchInfoCl" parameterType="java.lang.Integer" resultType="com.example.demo.bean.returndata.matchinfo">
+    select m.match_id user_id,real_name name,birthday,details,pic_url avatar,match_time,2 as user_role
+    from `match` m,children cl
+    where m.match_id=cl.user_id and m.user_id=#{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectMatchInfoRe" parameterType="java.lang.Integer" resultType="com.example.demo.bean.returndata.matchinfo">
+    select m.match_id user_id,children_name name,birthday,details,children_url avatar,match_time,3 as user_role
+    from `match` m,relative re
+    where m.match_id=re.user_id and m.user_id=#{userId,jdbcType=INTEGER}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from match
+    from `match`
     where user_id = #{userId,jdbcType=INTEGER}
       and match_id = #{matchId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from match
+    delete from `match`
     where user_id = #{userId,jdbcType=INTEGER}
       and match_id = #{matchId,jdbcType=INTEGER}
   </delete>
+  <!--批量删除-->
+  <delete id="deleteMatchs">
+    delete from `match`
+    where user_id=#{userId} and match_id in
+    <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </delete>
   <insert id="insert" parameterType="com.example.demo.bean.match">
-    insert into match (user_id, match_id, match_time
+    insert into `match` (user_id, match_id, match_time
       )
     values (#{userId,jdbcType=INTEGER}, #{matchId,jdbcType=INTEGER}, #{matchTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.example.demo.bean.match">
-    insert into match
+    insert into `match`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         user_id,
@@ -53,7 +71,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.bean.match">
-    update match
+    update `match`
     <set>
       <if test="matchTime != null">
         match_time = #{matchTime,jdbcType=TIMESTAMP},
@@ -63,7 +81,7 @@
       and match_id = #{matchId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.demo.bean.match">
-    update match
+    update `match`
     set match_time = #{matchTime,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=INTEGER}
       and match_id = #{matchId,jdbcType=INTEGER}

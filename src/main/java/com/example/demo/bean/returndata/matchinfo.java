@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
-public class starinfo {
+public class matchinfo {
     private int user_id;
+    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private int user_role;
-    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd",timezone="GMT+8")
-    private Date col_time;
+    private Date match_time;
     private String name;
     private String avatar;
     @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd",timezone="GMT+8")
@@ -31,12 +31,12 @@ public class starinfo {
         this.user_role = user_role;
     }
 
-    public Date getCol_time() {
-        return col_time;
+    public Date getMatch_time() {
+        return match_time;
     }
 
-    public void setCol_time(Date col_time) {
-        this.col_time = col_time;
+    public void setMatch_time(Date match_time) {
+        this.match_time = match_time;
     }
 
     public String getName() {

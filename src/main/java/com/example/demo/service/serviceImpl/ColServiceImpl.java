@@ -1,10 +1,7 @@
 package com.example.demo.service.serviceImpl;
 
-import com.example.demo.bean.children;
 import com.example.demo.bean.col;
-import com.example.demo.bean.relative;
 import com.example.demo.bean.returndata.starinfo;
-import com.example.demo.bean.transition.colbean;
 import com.example.demo.dao.childrenMapper;
 import com.example.demo.dao.collectionMapper;
 import com.example.demo.dao.relativeMapper;
@@ -12,7 +9,6 @@ import com.example.demo.result.Result;
 import com.example.demo.result.ResultGenerator;
 import com.example.demo.service.ColService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -70,7 +66,7 @@ public class ColServiceImpl implements ColService {
 
     @Override
     public Result deletecols(Map params) {
-        int user_id=(int)params.get("user_id");
+        int user_id =(int) params.get("user_id");
         ArrayList<Integer> list=(ArrayList)params.get("list");
         Map map=new HashMap<String,Object>();
         map.put("userId",user_id);
