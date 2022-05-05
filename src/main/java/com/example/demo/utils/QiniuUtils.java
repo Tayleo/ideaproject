@@ -94,6 +94,6 @@ public class QiniuUtils {
         }
     }
 
-    //下载文件（可以直接在前端下载？）
+
 }
 

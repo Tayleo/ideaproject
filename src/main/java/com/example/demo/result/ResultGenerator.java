@@ -22,6 +22,14 @@ public class ResultGenerator {
                 .setData(data);
     }
 
+    public static Result genSuccessResult(Object data,int count){
+        return new Result()
+                .setCode(ResultCode.SUCCESS)
+                .setMessage(DEFAULT_SUCCESS_MESSAGE)
+                .setData(data)
+                .setCount(count);
+    }
+
     public static Result genFailResult(String message) {
         return new Result()
                 .setCode(ResultCode.FAIL)

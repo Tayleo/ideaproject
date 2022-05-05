@@ -22,9 +22,10 @@ public class ChildrenController {
      * @return
      */
     @RequestMapping("getallChildren")
-    public Result getallChildren(){
-
-        return ResultGenerator.genSuccessResult(childrenService.getallChildren());
+    public Result getallChildren(@RequestBody Map<String,Integer> params){
+        int pagenum=params.get("pagenum");
+        int pagesize=params.get("pagesize");
+        return ResultGenerator.genSuccessResult(childrenService.getallChildren(pagenum,pagesize));
     }
 
     /**

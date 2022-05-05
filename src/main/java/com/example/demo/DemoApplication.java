@@ -20,11 +20,5 @@ public class DemoApplication extends WebMvcConfigurationSupport {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-        //因为有这一句，templates目录下的静态资源才能被加载，适用非标准目录
-        registry.addResourceHandler("/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX + "/templates/");
-        //因为有这一句，static目录下的静态资源才能被加载，适用标准目录
-       // registry.addResourceHandler("/static/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX + "/static/");
-        super.addResourceHandlers(registry);
-    }
+
 }

@@ -39,6 +39,27 @@ public class children {
 
     private String picUrl;
 
+    private Integer isRelease;
+
+    private Date releaseTime;
+
+    public Integer getIsRelease() {
+        return isRelease;
+    }
+
+    public void setIsRelease(Integer isRelease) {
+        this.isRelease = isRelease;
+    }
+
+    public Date getReleaseTime() {
+        return releaseTime;
+    }
+
+    public void setReleaseTime(Date releaseTime) {
+        this.releaseTime = releaseTime;
+    }
+
+
     public Integer getUserId() {
         return userId;
     }

@@ -1,5 +1,6 @@
 package com.example.demo.service.serviceImpl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.bean.message;
 import com.example.demo.bean.returndata.msgInfo;
 import com.example.demo.bean.returndata.msglast;
@@ -10,6 +11,7 @@ import com.example.demo.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,8 +22,12 @@ import java.util.Map;
 @Service
 public class MessageServiceImpl implements MessageService {
 
-    @Autowired
+    final
     messageMapper messageMapper;
+
+    public MessageServiceImpl(messageMapper messageMapper) {
+        this.messageMapper = messageMapper;
+    }
 
 
     @Override
@@ -49,13 +55,9 @@ public class MessageServiceImpl implements MessageService {
         int i=(int) params.get("type");
         byte type=(byte)i;
         String content=(String)params.get("content");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date time= null;
-        try {
-            time = sdf.parse((String) params.get("time"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        java.util.Date date = new Date();//获得当前时间
+        Timestamp t = new Timestamp(date.getTime());//将时间转换成Timestamp类型，这样便可以存入到Mysql数据库中
+
         //添加到数据中
 
         message msgsend=new message();
@@ -67,7 +69,7 @@ public class MessageServiceImpl implements MessageService {
         msgsend.setRealSendId(send_id);
         msgsend.setType(type);
         msgsend.setInfoContent(content);
-        msgsend.setInfoTime(time);
+        msgsend.setInfoTime(t);
        // msgsend.setStatus(1);
 
         msgaccept.setAcceptId(send_id);
@@ -76,7 +78,7 @@ public class MessageServiceImpl implements MessageService {
         msgaccept.setRealSendId(send_id);
         msgaccept.setType(type);
         msgaccept.setInfoContent(content);
-        msgaccept.setInfoTime(time);
+        msgaccept.setInfoTime(t);
 
         System.out.println(msgsend);
         System.out.println(msgaccept);
@@ -89,4 +91,50 @@ public class MessageServiceImpl implements MessageService {
             return ResultGenerator.genFailResult("发送消息失败");
         }
     }
+
+    @Override
+    public Result insertDB(JSONObject jsonObject) {
+        Byte type =jsonObject.getByte("type");
+        Integer accept_id =jsonObject.getInteger("acceptId");
+        Integer send_id=jsonObject.getInteger("sendId");
+        String content=jsonObject.getString("content");
+
+        java.util.Date date = new Date();//获得当前时间
+        Timestamp t = new Timestamp(date.getTime());//将时间转换成Timestamp类型，这样便可以存入到Mysql数据库中
+
+        //添加到数据中
+
+        message msgsend=new message();
+        message msgaccept=new message();
+
+        msgsend.setAcceptId(accept_id);
+        msgsend.setSendId(send_id);
+        msgsend.setRealAcceptId(accept_id);
+        msgsend.setRealSendId(send_id);
+        msgsend.setType(type);
+        msgsend.setInfoContent(content);
+        msgsend.setInfoTime(t);
+        // msgsend.setStatus(1);
+
+        msgaccept.setAcceptId(send_id);
+        msgaccept.setSendId(accept_id);
+        msgaccept.setRealAcceptId(accept_id);
+        msgaccept.setRealSendId(send_id);
+        msgaccept.setType(type);
+        msgaccept.setInfoContent(content);
+        msgaccept.setInfoTime(t);
+
+        System.out.println(msgsend);
+        System.out.println(msgaccept);
+
+        try{
+            messageMapper.insert(msgaccept);
+            messageMapper.insert(msgsend);
+            return ResultGenerator.genSuccessResult(t);
+        }catch(Exception e){
+            return ResultGenerator.genFailResult("发送消息失败");
+        }
+    }
+
+
 }

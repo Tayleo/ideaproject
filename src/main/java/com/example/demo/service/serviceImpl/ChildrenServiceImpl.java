@@ -24,7 +24,10 @@ public class ChildrenServiceImpl implements ChildrenService {
 
 
     @Override
-    public List<children> getallChildren() {
+    public List<children> getallChildren(int pageNum,int pagSize) {
+
+        int start = (pageNum-1)*pagSize;
+        int end=pageNum*pagSize;
 
         return childrenMapper.selectallchildren();
     }
@@ -45,6 +48,8 @@ public class ChildrenServiceImpl implements ChildrenService {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//注意月份是MM
 
+        String imgurl=(String)map.get("imgurl");
+
         int user_id=(int)map.get("user_id");
         children chil=new children();
         Map map1=(Map)map.get("forminfo");
@@ -53,8 +58,13 @@ public class ChildrenServiceImpl implements ChildrenService {
         //chil=MaptoBean.mapToBean(map1,chil);
         System.out.println(map1);
         chil.setUserId(user_id);
-
+        String sex=(String)userinfo.get("sex");
         chil.setRealName((String) userinfo.get("name"));
+        if(sex.equals("男")){
+            chil.setGender((byte) 1);
+        }else{
+            chil.setGender((byte) 0);
+        }
        // chil.setGender((Byte) userinfo.get("sex"));
         String age= (String) userinfo.get("age");
         chil.setAge(Integer.parseInt(age));
@@ -69,6 +79,8 @@ public class ChildrenServiceImpl implements ChildrenService {
         chil.setNowAddress((String) userinfo.get("address"));
         chil.setPhone((String) userinfo.get("phone"));
         chil.seteMail((String) userinfo.get("email"));
+        chil.setFeatures((String)userinfo.get("features"));
+        chil.setPicUrl(imgurl);
 
         chil.setLostTime((String) lostinfo.get("time"));
         chil.setLostCloth((String) lostinfo.get("cloth"));
@@ -77,7 +89,7 @@ public class ChildrenServiceImpl implements ChildrenService {
         chil.setDetails((String) lostinfo.get("details"));
 
         //children= MaptoBean.mapToBean(,children);
-        childrenMapper.insert(chil);
+        childrenMapper.insertSelective(chil);
         return ResultGenerator.genSuccessResult();
     }
 

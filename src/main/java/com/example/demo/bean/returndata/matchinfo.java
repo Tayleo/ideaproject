@@ -6,8 +6,8 @@ import java.util.Date;
 
 public class matchinfo {
     private int user_id;
-    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private int user_role;
+    @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd",timezone="GMT+8")
     private Date match_time;
     private String name;
     private String avatar;

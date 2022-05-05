@@ -1,15 +1,25 @@
 package com.example.demo.bean;
 
 public class role {
-    private Long roleId;
+    private Integer roleId;
 
     private String roleName;
 
-    public Long getRoleId() {
+    private String details;
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public Integer getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 

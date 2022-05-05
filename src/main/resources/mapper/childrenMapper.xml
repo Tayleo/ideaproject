@@ -17,18 +17,36 @@
     <result column="features" jdbcType="VARCHAR" property="features" />
     <result column="details" jdbcType="VARCHAR" property="details" />
     <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="isRelease" jdbcType="INTEGER" property="isRelease"/>
+    <result column="releaseTime" jdbcType="DATE" property="releaseTime" />
   </resultMap>
   <sql id="Base_Column_List">
     user_id, real_name, gender, age, birthday, now_address, phone, e_mail, lost_cloth, 
-    lost_height, lost_address, lost_time, features, details, pic_url
+    lost_height, lost_address, lost_time, features, details, pic_url,isRelease,releaseTime
   </sql>
 
 <!--  <select id="selectallchildren" resultType="com.example.demo.bean.children">-->
 <!--    select * from children;-->
 <!--  </select>-->
+  <update id="Release"  parameterType="java.lang.Integer" >
+    update children
+    set isRelease=1
+    where user_id=#{user_id,jdbcType=INTEGER}
+  </update>
+  <update id="refuse"  parameterType="java.lang.Integer" >
+    update children
+    set isRelease=2
+    where user_id=#{user_id,jdbcType=INTEGER}
+  </update>
+  <select id="noRelease" resultType="com.example.demo.bean.returndata.admininfo">
+    select alluser.user_id as id,user_nickname as nickname,2 as role_id ,releaseTime as time
+    from alluser,children
+    where alluser.user_id=children.user_id and children.isRelease=0
+    limit  #{start,jdbcType=INTEGER},#{end,jdbcType=INTEGER}
+  </select>
 
   <select id="selectallchildren" resultMap="BaseResultMap">
-    select * from children;
+    select * from children
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -47,14 +65,14 @@
       age, birthday, now_address, 
       phone, e_mail, lost_cloth, 
       lost_height, lost_address, lost_time, 
-      features, details, pic_url
+      features, details, pic_url,isRelease,releaseTime
       )
     values (#{userId,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
       #{age,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{nowAddress,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{eMail,jdbcType=VARCHAR}, #{lostCloth,jdbcType=VARCHAR}, 
       #{lostHeight,jdbcType=VARCHAR}, #{lostAddress,jdbcType=VARCHAR}, #{lostTime,jdbcType=VARCHAR}, 
       #{features,jdbcType=VARCHAR}, #{details,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}
-      )
+      0,#{releaseTime,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.example.demo.bean.children">
     insert into children
@@ -104,6 +122,12 @@
       <if test="picUrl != null">
         pic_url,
       </if>
+      <if test="isRelease != null">
+        isRelease,
+      </if>
+      <if test="releaseTime != null">
+        releaseTime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -150,6 +174,12 @@
       </if>
       <if test="picUrl != null">
         #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isRelease != null">
+        #{isRelease,jdbcType=INTEGER},
+      </if>
+      <if test="releaseTime != null">
+        #{releaseTime,jdbcType=DATE},
       </if>
     </trim>
   </insert>
@@ -198,6 +228,12 @@
       <if test="picUrl != null">
         pic_url = #{picUrl,jdbcType=VARCHAR},
       </if>
+      <if test="isRelease != null">
+        isRelease,
+      </if>
+      <if test="releaseTime != null">
+        releaseTime,
+      </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
@@ -216,7 +252,9 @@
       lost_time = #{lostTime,jdbcType=VARCHAR},
       features = #{features,jdbcType=VARCHAR},
       details = #{details,jdbcType=VARCHAR},
-      pic_url = #{picUrl,jdbcType=VARCHAR}
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      isRelease = #{isRelease,jdbcType=INTEGER},
+      releaseTime = #{isRelease,jdbcType=DATE}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>

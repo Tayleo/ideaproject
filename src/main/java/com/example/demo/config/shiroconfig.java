@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
+
+import javax.servlet.Filter;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+
 
 @Configuration
 public class shiroconfig {
@@ -20,6 +21,13 @@ public class shiroconfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager defaultWebSecurityManager){
         ShiroFilterFactoryBean factoryBean=new ShiroFilterFactoryBean();
         factoryBean.setSecurityManager(defaultWebSecurityManager);
+
+        /*添加自定义过滤器*/
+        HashMap<String, Filter> hashMap = new HashMap<String, Filter>();
+        hashMap.put("MyFilter", getTestFilter());
+        factoryBean.setFilters(hashMap);
+
+      //  factoryBean.setFilterChainDefinitionMap(filterMap);
 
         //权限设置
 //        Map<String,String> map=new HashMap<>();
@@ -55,5 +63,12 @@ public class shiroconfig {
         return new userRealm();
     }
 
+
+    /*** 自定义过滤器 */
+    @Bean(name = "testFilter")
+    public MyFilter getTestFilter(){
+        MyFilter testFilter = new MyFilter();
+        return testFilter;
+    }
 
 }

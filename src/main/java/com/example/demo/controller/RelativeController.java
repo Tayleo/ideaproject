@@ -23,9 +23,10 @@ public class RelativeController {
      * @return
      */
     @RequestMapping("getallRelative")
-    public Result getallRelative(){
-
-        Result result= ResultGenerator.genSuccessResult(relativeService.getallRelative());
+    public Result getallRelative(@RequestBody Map<String,Integer> params){
+        int pagenum=params.get("pagenum");
+        int pagesize=params.get("pagesize");
+        Result result= ResultGenerator.genSuccessResult(relativeService.getallRelative(pagenum,pagesize));
 
         return result;
     }
@@ -37,6 +38,7 @@ public class RelativeController {
      */
     @RequestMapping("getRelativebyid")
     public Result getRelativebyid(@RequestBody Map params){
+        System.out.println(params);
         int user_id= (int) params.get("user_id");
         relative r=relativeService.getRelativeById(user_id);
         return ResultGenerator.genSuccessResult(r);
@@ -49,7 +51,7 @@ public class RelativeController {
      */
     @RequestMapping("addRelative")
     public Result addRelative(@RequestBody Map params){
-        return null;
+        return relativeService.addRelative(params);
     }
 
     /**

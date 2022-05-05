@@ -8,6 +8,7 @@ import com.example.demo.result.Result;
 import com.example.demo.result.ResultGenerator;
 import com.example.demo.service.serviceImpl.UsersServiceImpl;
 import com.example.demo.utils.HttpClientUtil;
+import com.example.demo.utils.QiniuUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -15,6 +16,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +45,18 @@ public class UsersController {
 //        return null;
 //    }
 
+    /**
+     * 上传图片功能
+     * @param file
+     * @return
+     * @throws Exception
+     */
+        @RequestMapping("upload")
+        public String upLoadImg(@RequestParam("file") MultipartFile file) throws Exception{
+            String filename="15";   //用户id加上roleid就是图片名，它是唯一的
+            QiniuUtils.upload2Qiniu(file.getBytes(),filename);
+            return "http://rafrb6vhx.hn-bkt.clouddn.com/"+filename;
+        }
 
 
         /**

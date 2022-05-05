@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.logsMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.bean.logs">
+    <result column="methodName" jdbcType="VARCHAR" property="methodname" />
+    <result column="operationType" jdbcType="VARCHAR" property="operationtype" />
+    <result column="visitTime" jdbcType="TIMESTAMP" property="visittime" />
+    <result column="resSTime" jdbcType="TIMESTAMP" property="resstime" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="params" jdbcType="VARCHAR" property="params" />
+    <result column="errorMsg" jdbcType="VARCHAR" property="errormsg" />
+    <result column="results" jdbcType="VARCHAR" property="results" />
+    <result column="id" jdbcType="INTEGER" property="id" />
+  </resultMap>
+  <insert id="insert" parameterType="com.example.demo.bean.logs">
+    insert into logs (methodName, operationType, visitTime, 
+      resSTime, userName, params, 
+      errorMsg, results, id
+      )
+    values (#{methodname,jdbcType=VARCHAR}, #{operationtype,jdbcType=VARCHAR}, #{visittime,jdbcType=TIMESTAMP}, 
+      #{resstime,jdbcType=TIMESTAMP}, #{username,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR}, 
+      #{errormsg,jdbcType=VARCHAR}, #{results,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.bean.logs">
+    insert into logs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="methodname != null">
+        methodName,
+      </if>
+      <if test="operationtype != null">
+        operationType,
+      </if>
+      <if test="visittime != null">
+        visitTime,
+      </if>
+      <if test="resstime != null">
+        resSTime,
+      </if>
+      <if test="username != null">
+        userName,
+      </if>
+      <if test="params != null">
+        params,
+      </if>
+      <if test="errormsg != null">
+        errorMsg,
+      </if>
+      <if test="results != null">
+        results,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="methodname != null">
+        #{methodname,jdbcType=VARCHAR},
+      </if>
+      <if test="operationtype != null">
+        #{operationtype,jdbcType=VARCHAR},
+      </if>
+      <if test="visittime != null">
+        #{visittime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resstime != null">
+        #{resstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null">
+        #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="errormsg != null">
+        #{errormsg,jdbcType=VARCHAR},
+      </if>
+      <if test="results != null">
+        #{results,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

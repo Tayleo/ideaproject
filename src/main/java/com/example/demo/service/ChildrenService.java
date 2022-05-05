@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ChildrenService {
-    List<children> getallChildren();
+    List<children> getallChildren(int pageNum,int pageSize);
     Result getChildrenbyId(Map<String,Object> map);
     Result addChildren(Map<String,Object> map);
     Result updateChildren(Map<String,Object> map);

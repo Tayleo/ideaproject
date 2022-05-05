@@ -20,6 +20,31 @@
     </properties>
     <!--依赖列表-->
     <dependencies>
+
+        <!--lang3-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+            <exclusions>
+                <!-- 排除掉logging，不使用logback，改用log4j2 -->
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- log4j2 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
         <!--引入NekoHTML，配合spring.thymeleaf.mode=LEGACYHTML5使用，使Thymeleaf 可以解析非严格html格式的文档-->
         <dependency>
             <groupId>net.sourceforge.nekohtml</groupId>

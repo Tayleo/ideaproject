@@ -16,8 +16,6 @@ public class relative {
     @JsonFormat(shape= JsonFormat.Shape.STRING,pattern="yyyy-MM-dd",timezone="GMT+8")
     private Date birthday;
 
-    private String nowAddress;
-
     private String phone;
 
     private String eMail;
@@ -28,7 +26,7 @@ public class relative {
 
     private String lostAddress;
 
-    private Date lostTime;
+    private String lostTime;
 
     private String features;
 
@@ -36,11 +34,27 @@ public class relative {
 
     private String relation;
 
-    private String myname;
-
-    private Byte myage;
-
     private String childrenUrl;
+
+    private Integer isRelease;
+
+    private Date releaseTime;
+
+    public Integer getIsRelease() {
+        return isRelease;
+    }
+
+    public void setIsRelease(Integer isRelease) {
+        this.isRelease = isRelease;
+    }
+
+    public Date getReleaseTime() {
+        return releaseTime;
+    }
+
+    public void setReleaseTime(Date releaseTime) {
+        this.releaseTime = releaseTime;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -80,14 +94,6 @@ public class relative {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }
-
-    public String getNowAddress() {
-        return nowAddress;
-    }
-
-    public void setNowAddress(String nowAddress) {
-        this.nowAddress = nowAddress == null ? null : nowAddress.trim();
     }
 
     public String getPhone() {
@@ -130,11 +136,11 @@ public class relative {
         this.lostAddress = lostAddress == null ? null : lostAddress.trim();
     }
 
-    public Date getLostTime() {
+    public String getLostTime() {
         return lostTime;
     }
 
-    public void setLostTime(Date lostTime) {
+    public void setLostTime(String lostTime) {
         this.lostTime = lostTime;
     }
 
@@ -160,22 +166,6 @@ public class relative {
 
     public void setRelation(String relation) {
         this.relation = relation == null ? null : relation.trim();
-    }
-
-    public String getMyname() {
-        return myname;
-    }
-
-    public void setMyname(String myname) {
-        this.myname = myname == null ? null : myname.trim();
-    }
-
-    public Byte getMyage() {
-        return myage;
-    }
-
-    public void setMyage(Byte myage) {
-        this.myage = myage;
     }
 
     public String getChildrenUrl() {

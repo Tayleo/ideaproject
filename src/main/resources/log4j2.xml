@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<!--Configuration后面的status,这个用于设置Log4j2自身内部的信息输出,可以不设置,当设置成trace时,你会看到Log4j2内部各种详细输出-->
+<!--monitorInterval：Log4j2能够自动检测修改配置 文件和重新配置本身,设置间隔秒数-->
+    <!--%d{HH:mm:ss.SSS} 输出时间，精确度为毫秒。
+    %t 输出当前线程的名称。
+    %-5level 输出日志级别，-5表示左对齐并且固定占5个字符宽度，如果不足用空格补齐。
+    %logger 输出Logger名称，如果是Root的话就没有名称。
+    %msg 日志信息，也就是我们传入的信息。
+    %n 换行。
+    %F 输出所在的文件名。
+    %L 输出行号。
+    %M 输出所在方法名。
+    %l  输出语句所在的位置信息，包括文件名、类名、方法名、行号。
+    fatal - 严重的，造成服务中断的错误；
+    error - 其他错误运行期错误；
+    warn - 警告信息，如程序调用了一个即将作废的接口，接口的不当使用，运行状态不是期望的但仍可继续处理等；
+    info - 有意义的事件信息，如程序启动，关闭事件，收到请求事件等；
+    debug - 调试信息，可记录详细的业务处理到哪一步了，以及当前的变量状态；
+    trace - 更详细的跟踪信息；-->
+<Configuration>
+    <!--全局参数 设置日志文件的目录名称-->
+    <Properties>
+        <!-- %d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n-->
+        <Property name="pattern">%d{yyyy-MM-dd HH:mm:ss}%5p %c{1}:%L %M %X{ip} %X{username} %m %n</Property>
+        <Property name="logDir">logs/</Property>
+        <Property name="projectName">LogTest</Property>
+        <Property name="myLogName">allLog</Property>
+        <!-- 日志默认输出级别 -->
+        <property name="output_log_level">DEBUG</property>
+        <!-- 控制台显示的日志最低级别 -->
+        <property name="console_print_level">DEBUG</property>
+
+    </Properties>
+
+    <Appenders>
+        <!--输出到控制台的配置-->
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>${pattern}</Pattern>
+            </PatternLayout>
+        </Console>
+        <!-- 同一来源的输出器可以定义多个RollingFile，定义按天存储日志 -->
+        <RollingFile name="rolling_file" fileName="${logDir}/${projectName}.log"
+                     filePattern="${logDir}/${projectName}_%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${pattern}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+
+
+    </Appenders>
+
+    <Loggers>
+        <Root level="DEBUG">
+            <AppenderRef ref="console"/>
+        </Root>
+        <!--手动添加日志-->
+        <Logger name="myLog" level="trace" additivity="true">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="rolling_file"/>
+        </Logger>
+    </Loggers>
+</Configuration>

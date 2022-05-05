@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.bean.relative;
+import com.example.demo.bean.returndata.admininfo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,6 +17,12 @@ public interface relativeMapper {
     relative selectByPrimaryKey(Integer userId);
 
     List<relative> selectAllRelative();
+
+    List<admininfo> noRelease(Integer start,Integer end);
+
+    int Release(Integer user_id);
+
+    int refuse(Integer user_id);
 
     int updateByPrimaryKeySelective(relative record);
 

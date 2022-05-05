@@ -69,6 +69,7 @@ public class MatchServiceImpl implements MatchService {
         try{
             List<matchinfo> matchinfoList1=matchMapper.selectMatchInfoCl(user_id);
             List<matchinfo> matchinfoList2=matchMapper.selectMatchInfoRe(user_id);
+
             matchinfoList.addAll(matchinfoList1);
             matchinfoList.addAll(matchinfoList2);
             return ResultGenerator.genSuccessResult(matchinfoList);

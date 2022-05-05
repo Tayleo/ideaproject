@@ -11,8 +11,16 @@ public class Result {
     private int code;
     private String message;
     private Object data;
+    private int count;
 
+    public int getCount() {
+        return count;
+    }
 
+    public Result setCount(int count) {
+        this.count = count;
+        return this;
+    }
 
     public Result setCode(ResultCode resultCode) {
         this.code = resultCode.getCode();
